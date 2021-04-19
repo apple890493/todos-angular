@@ -72,6 +72,14 @@
   .todo-item {
     height: 60px;
     position: relative;
+    &.editing {
+      .todo-text {
+        display: none;
+      }
+      .todo-edit {
+        display: block;
+      }
+    }
     &::after {
       position: absolute;
       content: " ";
@@ -85,6 +93,7 @@
       label {
         color: #d3d3d3;
         text-decoration-line: line-through;
+        transition: color 150ms linear;
       }
     }
     &:hover {
@@ -117,9 +126,11 @@
         position: absolute;
         line-height: 60px;
         left: 30px;
+        transition: color 150ms linear;
       }
     }
     .todo-edit {
+      display: none;
       border: 1px solid #a9a9a9;
       box-shadow: inset 0 0 3px #a9a9a9;
       padding: 0 0 0 30px;

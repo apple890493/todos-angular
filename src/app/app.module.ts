@@ -8,10 +8,9 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { AppComponent } from './app.component';
 import { TodoHeaderComponent } from './todo-header/todo-header.component';
 import { TodoService } from './todo.service';
-import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, TodoHeaderComponent, FooterComponent],
+  declarations: [AppComponent, TodoHeaderComponent],
   imports: [
     BrowserModule,
     FormsModule,

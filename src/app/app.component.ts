@@ -9,8 +9,8 @@ import { TodoService } from './todo.service';
 })
 export class AppComponent implements OnInit {
   //declared todos for template can use it
-  todos: Todo[];
-  activeTodo: number;
+  todos: Todo[] = [];
+  activeTodo = 0;
   newTodo = '';
 
   private calculateActiveItem() {
@@ -46,11 +46,24 @@ export class AppComponent implements OnInit {
     this.newTodo = '';
   }
 
-  checkToggle(id: number): void {
-    console.log('checkToggle', id);
+  editTodo(event: any, todo): void {
+    const newValue = event.target.value;
+    todo.title = newValue;
+    this.todoService.editTodo(todo).subscribe();
+    this.calculateActiveItem();
+    todo.editing = false;
   }
 
-  deleteTodo(): void {
-    console.log('delete');
+  deleteTodo(todo: Todo): void {
+    console.log(todo.id, todo);
+    this.todos = this.todos.filter((oldTodo) => oldTodo !== todo);
+    this.calculateActiveItem();
+    this.todoService.deleteTodo(todo).subscribe;
+  }
+
+  checkTodoToggle(todo: Todo): void {
+    todo.isDone = !todo.isDone;
+    this.calculateActiveItem();
+    this.todoService.checkTodoToggle(todo).subscribe;
   }
 }

@@ -8,44 +8,46 @@
       class="add-todo"
       [(ngModel)]="newTodo"
       (keyup.enter)="addTodo(newTodo)"
-      autofocus
     />
     <ul class="todo-list">
       <input type="checkbox" class="toggle-all" />
       <li
         class="todo-item"
         *ngFor="let todo of todos"
-        [ngClass]="{ done: todo.isDone }"
+        [ngClass]="{ done: todo.isDone, editing: !!todo.editing }"
       >
         <div class="todo-text">
           <input
             type="checkbox"
             class="toggle"
             [checked]="todo.isDone"
-            (click)="checkToggle(todo.id)"
+            (click)="checkTodoToggle(todo)"
           />
-          <label>{{ todo.title }}</label>
-          <button class="delete"></button>
+          <label (dblclick)="todo.editing = true">{{ todo.title }}</label>
+          <button class="delete" (click)="deleteTodo(todo)"></button>
         </div>
+
         <input
-          type="text"
           value="{{ todo.title }}"
+          type="text"
           class="todo-edit"
-          style="display: none"
+          (keyup.enter)="editTodo($event,todo)"
+          (keyup.escape)="todo.editing = false"
+          (blur)="editTodo($event,todo)"
         />
       </li>
     </ul>
 
     <footer class="todo-footer">
       <span>
-        <strong> {{ this.activeTodo }} </strong> item left
+        <strong> {{ activeTodo }} </strong> item left
       </span>
       <div class="filters">
         <a class="selected">All</a>
         <a>Active</a>
         <a>Completed</a>
       </div>
-      <button class="clear-all show">Clear completed</button>
+      <button [ngClass]="{show: todos.length > activeTodo }" class="clear-all">Clear completed</button>
     </footer>
 
     <div class="pagination">
