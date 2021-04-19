@@ -10,7 +10,7 @@
       (keyup.enter)="addTodo(newTodo)"
     />
     <ul class="todo-list">
-      <input type="checkbox" class="toggle-all" />
+      <input type="checkbox" class="toggle-all" (click)="toggleAllTodo()" />
       <li
         class="todo-item"
         *ngFor="let todo of todos"
@@ -47,7 +47,7 @@
         <a>Active</a>
         <a>Completed</a>
       </div>
-      <button [ngClass]="{show: todos.length > activeTodo }" class="clear-all">Clear completed</button>
+      <button [ngClass]="{show: todos.length > activeTodo }" class="clear-all" (click)="deleteAllTodo()">Clear completed</button>
     </footer>
 
     <div class="pagination">

@@ -55,15 +55,39 @@ export class AppComponent implements OnInit {
   }
 
   deleteTodo(todo: Todo): void {
-    console.log(todo.id, todo);
     this.todos = this.todos.filter((oldTodo) => oldTodo !== todo);
     this.calculateActiveItem();
-    this.todoService.deleteTodo(todo).subscribe;
+    this.todoService.deleteTodo(todo).subscribe();
   }
 
   checkTodoToggle(todo: Todo): void {
     todo.isDone = !todo.isDone;
     this.calculateActiveItem();
-    this.todoService.checkTodoToggle(todo).subscribe;
+    this.todoService.checkTodoToggle(todo).subscribe();
+  }
+
+  toggleAllTodo(): void {
+    let unDone = this.todos.filter((data) => data.isDone !== true);
+
+    if (unDone.length === 0) {
+      this.todos.forEach((data) => {
+        data.isDone = !data.isDone;
+        this.todoService.checkTodoToggle(data).subscribe();
+      });
+    }
+
+    unDone.forEach((data) => {
+      data.isDone = !data.isDone;
+      this.todoService.checkTodoToggle(data).subscribe();
+    });
+    this.calculateActiveItem();
+  }
+
+  deleteAllTodo(): void {
+    let clearItem = this.todos.filter(data => data.isDone === true)
+    this.todos = this.todos.filter((data) => data.isDone !== true);
+    clearItem.forEach((data) => {
+      this.todoService.deleteTodo(data).subscribe();
+    });
   }
 }
