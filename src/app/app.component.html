@@ -1,23 +1,45 @@
 <div class="todoapp">
-
   <app-todo-header></app-todo-header>
 
   <section class="todo-main">
-    <input type="text" placeholder="What needs to be done?" class="add-todo" [(ngModel)]="newTodo" (keyup.enter)="addTodo(newTodo)" autofocus />
+    <input
+      type="text"
+      placeholder="What needs to be done?"
+      class="add-todo"
+      [(ngModel)]="newTodo"
+      (keyup.enter)="addTodo(newTodo)"
+      autofocus
+    />
     <ul class="todo-list">
       <input type="checkbox" class="toggle-all" />
-      <li class="todo-item" *ngFor="let todo of todos" [ngClass]="{'done': todo.isDone}">
+      <li
+        class="todo-item"
+        *ngFor="let todo of todos"
+        [ngClass]="{ done: todo.isDone }"
+      >
         <div class="todo-text">
-          <input type="checkbox" class="toggle" [checked]="todo.isDone" (click)="checkToggle(todo.id)" />
-          <label>{{todo.title}}</label>
+          <input
+            type="checkbox"
+            class="toggle"
+            [checked]="todo.isDone"
+            (click)="checkToggle(todo.id)"
+          />
+          <label>{{ todo.title }}</label>
           <button class="delete"></button>
         </div>
-        <input type="text" value="{{todo.title}}" class="todo-edit" style="display: none">
+        <input
+          type="text"
+          value="{{ todo.title }}"
+          class="todo-edit"
+          style="display: none"
+        />
       </li>
     </ul>
-   
+
     <footer class="todo-footer">
-      <span> <strong> {{this.activeTodo}} </strong> item left </span>
+      <span>
+        <strong> {{ this.activeTodo }} </strong> item left
+      </span>
       <div class="filters">
         <a class="selected">All</a>
         <a>Active</a>
@@ -25,6 +47,16 @@
       </div>
       <button class="clear-all show">Clear completed</button>
     </footer>
-    <!-- <div>pagination</div> -->
+
+    <div class="pagination">
+      <a href="#">&laquo;</a>
+      <a href="#">1</a>
+      <a href="#" class="active">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#">5</a>
+      <a href="#">6</a>
+      <a href="#">&raquo;</a>
+    </div>
   </section>
 </div>
