@@ -1,0 +1,51 @@
+<div class="todoapp">
+  <header class="todo-header">
+    <h1>todos</h1>
+  </header>
+
+  <section class="todo-main">
+    <input type="text" placeholder="What needs to be done?" class="add-todo" [(ngModel)]="newTodo"
+      (keyup.enter)="addTodo(newTodo)" />
+    <ul class="todo-list">
+      <input type="checkbox" class="toggle-all" (click)="toggleAllTodo()" [checked]="toggleCheck"
+        *ngIf="todos.length > 0" />
+      <li class="todo-item" *ngFor="let todo of todos" [ngClass]="{ done: todo.isDone, editing: !!todo.editing }">
+        <div class="todo-text">
+          <input type="checkbox" class="toggle" [checked]="todo.isDone" (click)="checkTodoToggle(todo)" />
+          <label (dblclick)="todo.editing = true">{{ todo.title }}</label>
+          <button class="delete" (click)="deleteTodo(todo)"></button>
+        </div>
+
+        <input value="{{ todo.title }}" type="text" class="todo-edit" (keyup.enter)="editTodo($event, todo)"
+          (keyup.escape)="todo.editing = false" (blur)="editTodo($event, todo)" />
+      </li>
+    </ul>
+
+    <footer class="todo-footer" *ngIf="footerTodo">
+      <span>
+        <strong> {{ activeTodo }} </strong> item left
+      </span>
+      <div class="filters">
+        <a [routerLink]="['/all']" [class.selected]="path === 'all'">All</a>
+        <a [routerLink]="['/active']" [class.selected]="path === 'active'">Active</a>
+        <a [routerLink]="['/completed']" [class.selected]="path === 'completed'">Completed</a>
+      </div>
+      <button [ngClass]="{ show: todos.length > activeTodo }" class="clear-all" (click)="deleteAllTodo()">
+        Clear completed
+      </button>
+    </footer>
+
+    <div class="pagination" *ngIf="todos.length > 0">
+      <a href="#">&laquo;</a>
+      <a href="#">1</a>
+      <a href="#" class="active">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#">5</a>
+      <a href="#">6</a>
+      <a href="#">&raquo;</a>
+    </div>
+  </section>
+
+
+</div>

@@ -9,14 +9,14 @@ export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const todos = [
       { id: 1, title: 'Learn Angular', isDone: false },
-      { id: 2, title: 'Angular Cli', isDone: true },
+      { id: 2, title: 'Angular Cli', isDone: false },
       { id: 3, title: 'Init project', isDone: false },
-      { id: 4, title: 'Use database', isDone: true },
+      { id: 4, title: 'Use database', isDone: false },
       { id: 5, title: 'Add pagination', isDone: false },
       // { id: 6, title: 'test 1', isDone: false },
-      // { id: 7, title: 'test 2', isDone: true },
+      // { id: 7, title: 'test 2', isDone:false },
       // { id: 8, title: 'test 3', isDone: false },
-      // { id: 9, title: 'test 4', isDone: true },
+      // { id: 9, title: 'test 4', isDone:false },
       // { id: 10, title: 'test 5', isDone: false },
     ];
     return { todos };

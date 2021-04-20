@@ -1,0 +1,311 @@
+/* You can add global styles to this file, and also import other style files */
+
+.todoapp {
+  position: relative;
+  text-align: center;
+  letter-spacing: 1px;
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    &:focus {
+      outline: 0;
+    }
+  }
+  input {
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
+  button {
+    background: transparent;
+    box-shadow: 0px 0px 0px transparent;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+    &:hover {
+      background: transparent;
+      box-shadow: 0px 0px 0px transparent;
+      border: 0px solid transparent;
+      text-shadow: 0px 0px 0px transparent;
+    }
+    &:active {
+      outline: none;
+      border: none;
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+}
+
+// header
+.todo-header {
+  position: absolute;
+  width: 100%;
+  top: -50px;
+  h1 {
+    font-size: 100px;
+    font-weight: 100;
+    color: rgba(175, 47, 47, 0.15);
+  }
+}
+
+//main
+.todo-main {
+  position: relative;
+  top: 140px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
+  .add-todo {
+    letter-spacing: inherit;
+    background-color: rgba(0, 0, 0, 0.005);
+    color: inherit;
+    font-size: 24px;
+    font-weight: 100;
+    font-family: inherit;
+    padding: 15px 15px 15px 65px;
+    line-height: 1.4em;
+    width: 100%;
+    box-shadow: inset 0 -2px 1px rgb(0 0 0 / 3%);
+    &::placeholder {
+      font-weight: 100;
+      color: #e6e6e6;
+      font-style: italic;
+    }
+  }
+}
+
+.todo-list {
+  margin: 0;
+  list-style: none;
+  .todo-item {
+    height: 60px;
+    position: relative;
+    &.editing {
+      .todo-text {
+        display: none;
+      }
+      .todo-edit {
+        display: block;
+      }
+    }
+    &::after {
+      position: absolute;
+      content: " ";
+      top: 0px;
+      left: -40px;
+      height: 1px;
+      width: 550px;
+      background-color: #ededed;
+    }
+    &.done {
+      label {
+        color: #d3d3d3;
+        text-decoration-line: line-through;
+        transition: color 150ms linear;
+      }
+    }
+    &:hover {
+      .delete {
+        visibility: visible;
+      }
+    }
+    .todo-text {
+      .toggle {
+        border: 1px solid #dcdcdc;
+        opacity: 0.7;
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+        margin: 0 10px;
+        position: absolute;
+        top: 50%;
+        left: -15px;
+        transform: translate(-50%, -50%);
+        &:checked {
+          border: 1.5px solid rgb(185, 204, 179);
+          background-image: url("../../assets/checkmark.png");
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+      label {
+        font-weight: 100;
+        font-size: 24px;
+        position: absolute;
+        line-height: 60px;
+        left: 30px;
+        transition: color 150ms linear;
+      }
+    }
+    .todo-edit {
+      display: none;
+      border: 1px solid #a9a9a9;
+      box-shadow: inset 0 0 3px #a9a9a9;
+      padding: 0 0 0 30px;
+      width: 100%;
+      letter-spacing: inherit;
+      font-family: inherit;
+      font-size: 24px;
+      font-weight: 100;
+      position: absolute;
+      top: 2%;
+      left: 0%;
+      line-height: 57px;
+    }
+  }
+}
+
+.delete {
+  visibility: hidden;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 17px;
+  height: 17px;
+  margin: auto 0;
+  &::before,
+  &::after {
+    position: absolute;
+    content: " ";
+    top: 0px;
+    height: 17px;
+    width: 1px;
+    background-color: #cc9a9a;
+  }
+  &::before {
+    transform: rotate(45deg);
+  }
+  &::after {
+    transform: rotate(-45deg);
+  }
+  &:hover {
+    &::after,
+    &::before {
+      background-color: #af5b5e;
+    }
+  }
+}
+
+.toggle-all {
+  position: absolute;
+  top: 13px;
+  left: 10px;
+  width: 33px;
+  height: 33px;
+  text-align: center;
+  transform: rotate(0.25turn);
+  &:checked {
+    &::before {
+      color: #737373;
+    }
+  }
+  &::before {
+    content: "❯";
+    font-size: 22px;
+    color: #e6e6e6;
+    line-height: 33px;
+  }
+}
+
+//footer
+.todo-footer {
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+  color: #777;
+  font-size: 14px;
+  font-weight: lighter;
+  position: relative;
+  width: 100%;
+  height: 40px;
+  padding: 10px 15px;
+  border-top: 1px solid #e6e6e6;
+  span {
+    float: left;
+    strong {
+      font-weight: inherit;
+    }
+  }
+  .filters {
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    list-style: none;
+    a {
+      color: #777;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      padding: 3px 7px;
+      margin: 3px;
+      border-radius: 3px;
+      &:hover {
+        border-color: rgba(175, 47, 47, 0.1);
+      }
+      &.selected {
+        border-color: rgba(175, 47, 47, 0.2);
+      }
+    }
+  }
+  .clear-all {
+    // float: right; //會有層級問題
+    display: none;
+    &.show {
+      display: block;
+      letter-spacing: inherit;
+      font-family: inherit;
+      color: inherit;
+      font-size: 14px;
+      font-weight: lighter;
+      position: absolute;
+      bottom: 12px;
+      right: 3%;
+      border: none;
+      background: none;
+      margin: 0;
+      padding: 0;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.todo-footer::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  box-shadow: 0 1px 1px rgb(0 0 0 / 20%), 0 8px 0 -3px #f6f6f6,
+    0 9px 1px -3px rgb(0 0 0 / 20%), 0 16px 0 -6px #f6f6f6,
+    0 17px 1px -6px rgb(0 0 0 / 20%);
+}
+
+.pagination {
+  position: absolute;
+  padding: 0 0 10px 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  a {
+    display: inline-block;
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    &:hover {
+      background-color: rgba(175, 47, 47, 0.5);
+    }
+    &.active {
+      background-color: rgba(175, 47, 47);
+      color: white;
+    }
+  }
+}

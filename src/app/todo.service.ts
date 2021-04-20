@@ -1,5 +1,6 @@
 //CRUD methods
 import { Injectable } from '@angular/core';
+import { map, filter } from 'rxjs/operators';
 import { Todo } from './todo';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -12,10 +13,30 @@ export class TodoService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // this.test();
+  }
+
+  // private datalist: Todo[];
+
+  // private abc():Todo[]{
+  //  return this.datalist.filter(x=>x.isDone);
+  // }
+
+
+  // test() {
+  //   this.http.get<Todo[]>(this.todosUrl).subscribe((x) => {
+  //     this.datalist = x;
+  //   });
+  // }
 
   getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.todosUrl);
+    // if (query === 'completed') {
+    //   console.log('yes');
+    //   return datalist.pipe((response: any) => response.json()).
+    // }
+    return this.http.get<Todo[]>(this.todosUrl);;
+    //observabl subject
   }
 
   addTodo(todo: Todo): Observable<Todo> {
@@ -35,6 +56,4 @@ export class TodoService {
   checkTodoToggle(todo: Todo): Observable<any> {
     return this.http.put(this.todosUrl, todo, this.httpOptions);
   }
-
-
 }
