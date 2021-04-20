@@ -14,12 +14,21 @@ export class TodoComponent implements OnInit {
   todoleft: Todo[];
   activeTodo = 0;
   newTodo = '';
-  toggleCheck = false;
-  footerTodo: boolean;
+  toggleCheck: boolean;
+  footerTodo: boolean = true;
   public path;
 
   private calculateActiveItem() {
     this.activeTodo = this.todoleft.filter((todo) => !todo.isDone).length;
+  }
+
+  private toggleAllShow() {
+    let checkItem = this.todoleft.filter((t) => t.isDone).length;
+    this.toggleCheck = checkItem > 0 ? true : false;
+  }
+
+  private footerShow() {
+    this.footerTodo = this.todoleft.length === 0 ? false : true;
   }
 
   //inject the TodoService thus can use it
@@ -46,8 +55,8 @@ export class TodoComponent implements OnInit {
       } else {
         this.todos = todos;
       }
-      this.footerTodo = true;
       this.calculateActiveItem();
+      this.footerShow();
     });
   }
 
@@ -60,7 +69,10 @@ export class TodoComponent implements OnInit {
       .addTodo({ title, isDone: false } as Todo)
       .subscribe((todo) => {
         this.todos.push(todo);
+        this.todoleft = this.todos;
         this.calculateActiveItem();
+        this.footerShow();
+        this.toggleAllShow();
       });
     this.newTodo = '';
   }
@@ -75,17 +87,20 @@ export class TodoComponent implements OnInit {
 
   deleteTodo(todo: Todo): void {
     this.todos = this.todos.filter((oldTodo) => oldTodo !== todo);
-    this.calculateActiveItem();
+    this.todoleft = this.todos;
     this.todoService.deleteTodo(todo).subscribe();
+    this.calculateActiveItem();
+    this.footerShow();
+    this.toggleAllShow();
   }
 
   checkTodoToggle(todo: Todo): void {
     todo.isDone = !todo.isDone;
     let checkCount = this.todos.filter((data) => data.isDone !== true);
     if (checkCount.length === 0) {
-      this.toggleCheck = true;
     }
     this.calculateActiveItem();
+    this.toggleAllShow();
     this.todoService.checkTodoToggle(todo).subscribe();
   }
 
@@ -104,13 +119,18 @@ export class TodoComponent implements OnInit {
       this.todoService.checkTodoToggle(data).subscribe();
     });
     this.calculateActiveItem();
+    this.toggleAllShow();
   }
 
   deleteAllTodo(): void {
     let clearItem = this.todos.filter((data) => data.isDone === true);
     this.todos = this.todos.filter((data) => data.isDone !== true);
+    this.todoleft = this.todos;
     clearItem.forEach((data) => {
       this.todoService.deleteTodo(data).subscribe();
     });
+    this.footerShow();
+    this.calculateActiveItem();
+    this.toggleAllShow();
   }
 }
