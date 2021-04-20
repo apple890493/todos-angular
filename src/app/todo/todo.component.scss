@@ -198,7 +198,7 @@
   height: 33px;
   text-align: center;
   transform: rotate(0.25turn);
-  &:checked {
+  &.checked {
     &::before {
       color: #737373;
     }

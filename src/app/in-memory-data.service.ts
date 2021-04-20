@@ -13,17 +13,15 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 3, title: 'Init project', isDone: false },
       { id: 4, title: 'Use database', isDone: false },
       { id: 5, title: 'Add pagination', isDone: false },
-      // { id: 6, title: 'test 1', isDone: false },
-      // { id: 7, title: 'test 2', isDone:false },
-      // { id: 8, title: 'test 3', isDone: false },
-      // { id: 9, title: 'test 4', isDone:false },
-      // { id: 10, title: 'test 5', isDone: false },
+      { id: 6, title: 'test 1', isDone: false },
+      { id: 7, title: 'test 2', isDone: false },
+      { id: 8, title: 'test 3', isDone: false },
     ];
     return { todos };
   }
 
   genId(todos: Todo[]): number {
-    return todos.length > 0 ? todos.length + 1 : 1;
+    return todos.length > 0 ? Math.max(...todos.map((todo) => todo.id)) + 1 : 1;
   }
 
   constructor() {}

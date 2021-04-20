@@ -7,9 +7,9 @@
     <input type="text" placeholder="What needs to be done?" class="add-todo" [(ngModel)]="newTodo"
       (keyup.enter)="addTodo(newTodo)" />
     <ul class="todo-list">
-      <input type="checkbox" class="toggle-all" (click)="toggleAllTodo()" [checked]="toggleCheck"
+      <input type="checkbox" class="toggle-all" (click)="toggleAllTodo()" [ngClass]="{checked:toggleCheck}"
         *ngIf="todos.length > 0" />
-      <li class="todo-item" *ngFor="let todo of todos" [ngClass]="{ done: todo.isDone, editing: !!todo.editing }">
+      <li class="todo-item" *ngFor="let todo of todoPerPage" [ngClass]="{ done: todo.isDone, editing: !!todo.editing }">
         <div class="todo-text">
           <input type="checkbox" class="toggle" [checked]="todo.isDone" (click)="checkTodoToggle(todo)" />
           <label (dblclick)="todo.editing = true">{{ todo.title }}</label>
@@ -30,20 +30,14 @@
         <a [routerLink]="['/active']" [class.selected]="path === 'active'">Active</a>
         <a [routerLink]="['/completed']" [class.selected]="path === 'completed'">Completed</a>
       </div>
-      <button [ngClass]="{ show: todos.length > activeTodo }" class="clear-all" (click)="deleteAllTodo()">
+      <button class="clear-all" [ngClass]="{show: toggleCheck}" (click)="deleteAllTodo()">
         Clear completed
       </button>
     </footer>
 
+   
     <div class="pagination">
-      <a href="#">&laquo;</a>
-      <a href="#">1</a>
-      <a href="#" class="active">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-      <a href="#">6</a>
-      <a href="#">&raquo;</a>
+      <a (click)="getPageData(page)" [ngClass]="{active: page === currentPage}" *ngFor="let page of totalPages">{{page}}</a>
     </div>
   </section>
 </div>

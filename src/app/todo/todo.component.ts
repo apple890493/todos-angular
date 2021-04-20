@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from '../todo';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TodoService } from '../todo.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-todo',
@@ -11,12 +12,15 @@ import { TodoService } from '../todo.service';
 export class TodoComponent implements OnInit {
   //declared todos for template can use it
   todos: Todo[] = [];
+  todoPerPage: Todo[];
   todoleft: Todo[];
   activeTodo = 0;
   newTodo = '';
   toggleCheck: boolean;
   footerTodo: boolean = true;
-  public path;
+  path;
+  totalPages = [];
+  currentPage = 1;
 
   private calculateActiveItem() {
     this.activeTodo = this.todoleft.filter((todo) => !todo.isDone).length;
@@ -31,10 +35,25 @@ export class TodoComponent implements OnInit {
     this.footerTodo = this.todoleft.length === 0 ? false : true;
   }
 
+  private getTotalPages() {
+    this.totalPages = [];
+    const pageIndex = Math.ceil(this.todos.length / 5) || 0;
+    for (let i = 1; i <= pageIndex; i++) {
+      this.totalPages.push(i);
+    }
+  }
+
+  private getPageData(page: number) {
+    this.currentPage = page;
+    let offset = (this.currentPage - 1) * 5;
+    this.todoPerPage = this.todos.slice(offset, offset + 5);
+  }
+
   //inject the TodoService thus can use it
   constructor(
     private todoService: TodoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -42,6 +61,7 @@ export class TodoComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.path = params['status'];
       this.getTodos(this.path);
+      console.log('place', params['status']);
     });
   }
 
@@ -51,30 +71,49 @@ export class TodoComponent implements OnInit {
       if (query === 'completed') {
         this.todos = todos.filter((data) => data.isDone);
       } else if (query === 'active') {
+        console.log('here3', this.todos);
         this.todos = todos.filter((data) => !data.isDone);
-      } else {
+      } else if (query === 'all') {
         this.todos = todos;
+        console.log('here2', this.todos);
       }
+      this.getTotalPages();
+      this.getPageData(this.currentPage);
       this.calculateActiveItem();
       this.footerShow();
+      console.log('h');
     });
   }
 
-  addTodo(title: string): void {
+  addTodo(title: string) {
     title = title.trim();
     if (!title) {
       return;
     }
+    // const newTodo = await this.todoService
+    //   .addTodo({ title, isDone: false } as Todo)
+    //   .toPromise();
+    // this.todos.push(newTodo);
+    // this.todoleft = this.todos;
+    // this.calculateActiveItem();
+    // this.footerShow();
+    // this.toggleAllShow();
+    // this.newTodo = '';
+    // this.getTotalPages();
+    // this.getPageData(1);
     this.todoService
       .addTodo({ title, isDone: false } as Todo)
       .subscribe((todo) => {
         this.todos.push(todo);
+        console.log('here', this.todos);
         this.todoleft = this.todos;
-        this.calculateActiveItem();
-        this.footerShow();
-        this.toggleAllShow();
+        this.newTodo = '';
+        this.router.navigate(['all']);
+        // this.location.replaceState('/all');
+        // this.path = 'all';
+        // this.getTodos('all');
+        console.log('dine');
       });
-    this.newTodo = '';
   }
 
   editTodo(event: any, todo): void {
@@ -92,6 +131,8 @@ export class TodoComponent implements OnInit {
     this.calculateActiveItem();
     this.footerShow();
     this.toggleAllShow();
+    this.getTotalPages();
+    this.getPageData(this.currentPage);
   }
 
   checkTodoToggle(todo: Todo): void {
@@ -132,5 +173,7 @@ export class TodoComponent implements OnInit {
     this.footerShow();
     this.calculateActiveItem();
     this.toggleAllShow();
+    this.getTotalPages();
+    this.getPageData(1);
   }
 }

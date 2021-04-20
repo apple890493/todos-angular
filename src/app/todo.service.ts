@@ -17,18 +17,6 @@ export class TodoService {
     // this.test();
   }
 
-  // private datalist: Todo[];
-
-  // private abc():Todo[]{
-  //  return this.datalist.filter(x=>x.isDone);
-  // }
-
-
-  // test() {
-  //   this.http.get<Todo[]>(this.todosUrl).subscribe((x) => {
-  //     this.datalist = x;
-  //   });
-  // }
 
   getTodos(): Observable<Todo[]> {
     // if (query === 'completed') {
@@ -57,3 +45,17 @@ export class TodoService {
     return this.http.put(this.todosUrl, todo, this.httpOptions);
   }
 }
+
+
+  // private datalist: Todo[];
+
+  // private abc():Todo[]{
+  //  return this.datalist.filter(x=>x.isDone);
+  // }
+
+
+  // test() {
+  //   this.http.get<Todo[]>(this.todosUrl).subscribe((x) => {
+  //     this.datalist = x;
+  //   });
+  // }
