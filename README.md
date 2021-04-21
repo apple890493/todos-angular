@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
 
-<img width="300" height="200" src="https://github.com/apple890493/todos-angular/screen-shot.png"/>
+<img width="300" height="200" src=""/>
 
 ## Development server
 
