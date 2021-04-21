@@ -81,6 +81,7 @@ export class TodoComponent implements OnInit {
         this.getTotalPages();
         this.getPageData(this.currentPage);
         this.calculateActiveItem();
+        this.toggleAllShow();
         this.footerShow();
       });
   }
@@ -120,6 +121,7 @@ export class TodoComponent implements OnInit {
     this.toggleAllShow();
     this.getTotalPages();
     this.getPageData(this.currentPage);
+    this.router.navigate(['all']);
   }
 
   checkTodoToggle(todo: Todo): void {
@@ -161,5 +163,6 @@ export class TodoComponent implements OnInit {
     this.toggleAllShow();
     this.getTotalPages();
     this.getPageData(1);
+    this.router.navigate(['all']);
   }
 }
