@@ -1,13 +1,13 @@
 //CRUD methods
 import { Injectable } from '@angular/core';
-import { map, filter } from 'rxjs/operators';
 import { Todo } from './todo';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
-  private todosUrl = 'api/todos';
+  private todosUrl = 'http://localhost:3000/todos';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -17,13 +17,8 @@ export class TodoService {
     // this.test();
   }
 
-
   getTodos(): Observable<Todo[]> {
-    // if (query === 'completed') {
-    //   console.log('yes');
-    //   return datalist.pipe((response: any) => response.json()).
-    // }
-    return this.http.get<Todo[]>(this.todosUrl);;
+    return this.http.get<Todo[]>(this.todosUrl);
     //observabl subject
   }
 
@@ -32,7 +27,13 @@ export class TodoService {
   }
 
   editTodo(todo: Todo): Observable<any> {
-    return this.http.put(this.todosUrl, todo, this.httpOptions);
+    const id = todo.id;
+    const url = `${this.todosUrl}/${id}`;
+    return this.http.put(url, todo, this.httpOptions).pipe(
+      tap((oo) => {
+        console.log(oo);
+      })
+    );
   }
 
   deleteTodo(todo: Todo): Observable<Todo> {
@@ -42,20 +43,20 @@ export class TodoService {
   }
 
   checkTodoToggle(todo: Todo): Observable<any> {
-    return this.http.put(this.todosUrl, todo, this.httpOptions);
+    const id = todo.id;
+    const url = `${this.todosUrl}/${id}`;
+    return this.http.put(url, todo, this.httpOptions);
   }
 }
 
+// private datalist: Todo[];
 
-  // private datalist: Todo[];
+// private abc():Todo[]{
+//  return this.datalist.filter(x=>x.isDone);
+// }
 
-  // private abc():Todo[]{
-  //  return this.datalist.filter(x=>x.isDone);
-  // }
-
-
-  // test() {
-  //   this.http.get<Todo[]>(this.todosUrl).subscribe((x) => {
-  //     this.datalist = x;
-  //   });
-  // }
+// test() {
+//   this.http.get<Todo[]>(this.todosUrl).subscribe((x) => {
+//     this.datalist = x;
+//   });
+// }

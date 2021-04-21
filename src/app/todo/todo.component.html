@@ -5,7 +5,7 @@
 
   <section class="todo-main">
     <input type="text" placeholder="What needs to be done?" class="add-todo" [(ngModel)]="newTodo"
-      (keyup.enter)="addTodo(newTodo)" />
+      (keyup.enter)="addTodo(newTodo)" autofocus/>
     <ul class="todo-list">
       <input type="checkbox" class="toggle-all" (click)="toggleAllTodo()" [ngClass]="{checked:toggleCheck}"
         *ngIf="todos.length > 0" />
@@ -17,7 +17,8 @@
         </div>
 
         <input value="{{ todo.title }}" type="text" class="todo-edit" (keyup.enter)="editTodo($event, todo)"
-          (keyup.escape)="todo.editing = false" (blur)="editTodo($event, todo)" />
+          (keyup.escape)="todo.editing = false" 
+          (blur)="editTodo($event, todo)" />
       </li>
     </ul>
 
