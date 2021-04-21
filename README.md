@@ -1,4 +1,4 @@
-# Angular Todo App with Json-server
+# Angular Todo App with Json-server
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
 
